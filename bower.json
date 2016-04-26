@@ -1,0 +1,8 @@
+{
+  "name": "private",
+  "dependencies": {
+    "angular-material": "^1.0.7"
+  },
+  "devDependencies": {},
+  "private": true
+}
