@@ -1,3 +1,3 @@
 # goingplaces
 
-TypeScript, Angular, Material
+TypeScript, Angular, Material, Sass, Gulp
