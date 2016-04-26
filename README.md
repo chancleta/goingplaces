@@ -1,1 +1,3 @@
 # goingplaces
+
+TypeScript, Angular, Material
