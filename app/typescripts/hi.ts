@@ -1,10 +1,11 @@
-class klk{
+module test {
+    class klk {
 
 
+        public static val():Boolean {
+            return false;
+        }
 
+    }
 
 }
-
-var x = 6 ;
-
-alert("asds");
