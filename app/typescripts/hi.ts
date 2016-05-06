@@ -1,29 +1,24 @@
+namespace Shapes {
 
-interface  Greet{
-    greet():void;
-}
-
-class Greeter implements Greet{
-
-    private name: string;
-    constructor(name: string)
-    {
-        this.name = name;
+    export interface IRectangle {
+        height: number;
+        width: number;
+        getArea(): number;
     }
 
-    public greet():void{
-        alert(this.getName());
-    }
+    export class Rectangle implements IRectangle {
+        getArea():number {
+            return this.height * this.width;
+        }
 
-    public getName():string{
-        return this.name;
+        constructor(public height:number, public width:number) {
+
+        }
     }
 }
 
-window.onload = function(){
-    let gree = new Greeter("Luis");
-    let greeter = <Greet> gree;
+var rec:Shapes.IRectangle = new Shapes.Rectangle(5, 4);
 
-   console.log(greeter);
-    greeter.greet();
-};
+console.log(rec.getArea());
+
+

@@ -11,6 +11,7 @@ var mainBowerFiles = require('gulp-main-bower-files');
 var concat = require('gulp-concat');
 var gulpFilter = require('gulp-filter');
 var usemin = require('gulp-usemin');
+var merge = require('merge2');
 
 var files = {
 
@@ -29,11 +30,13 @@ var files = {
     js: {
         alljs: "app/js/**/*.js",
         all: "app/js/**/*",
-        dir: "app/js"
+        dir: "app/js",
+        definition: "app/js/definitions"
+
     },
     typscripts: {
         all: "app/typescripts/**/*.ts",
-        dir: "app/typescripts"
+        dir: "app/typescripts",
     },
     sass: {
         all: "app/sass/**/*",
@@ -77,10 +80,16 @@ gulp.task("compile:typescripts", function () {
     var tsResult = gulp.src(files.typscripts.all)
         .pipe(ts({
             sortOutput: true,
+            declaration: true,
+            noExternalResolve: true
         }));
 
-    return tsResult.js
-        .pipe(gulp.dest(files.js.dir));
+    return merge([
+        tsResult.dts
+            .pipe(gulp.dest(files.js.definition)),
+        tsResult.js
+            .pipe(gulp.dest(files.js.dir))
+    ]);
 });
 
 gulp.task("compile:sass", function () {
