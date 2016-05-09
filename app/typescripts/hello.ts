@@ -1,1 +1,3 @@
-//alert("bye");
+class Hello{}
+
+export{Hello}

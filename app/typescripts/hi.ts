@@ -1,24 +1,49 @@
-namespace Shapes {
+import {Hello} from 'hello'
 
-    export interface IRectangle {
-        height: number;
-        width: number;
-        getArea(): number;
-    }
+enum Category{
+    drama, fantasy, love
+}
 
-    export class Rectangle implements IRectangle {
-        getArea():number {
-            return this.height * this.width;
-        }
+class Book {
 
-        constructor(public height:number, public width:number) {
-
-        }
+    constructor(public id:number, public name:string,public  available:boolean,public  category:Category) {
     }
 }
 
-var rec:Shapes.IRectangle = new Shapes.Rectangle(5, 4);
 
-console.log(rec.getArea());
+class BookService {
+
+    static getAllBoooks():Array<Book> {
+        let allBooks:Array<Book> = [];
+        allBooks.push(new Book(1, "Book 1", true, Category.fantasy));
+        allBooks.push(new Book(2, "Book 2", true, Category.drama));
+        allBooks.push(new Book(3, "Book 3", true, Category.love));
+        return allBooks;
+    }
+
+    static getBookById(id:number):Book {
+        return this.getAllBoooks().filter(book => book.id === id)[0];
+    }
+
+}
+function OverloadTest(signature:string):void;
+function OverloadTest(signature:boolean):void;
+function OverloadTest(signature:any):void{
+    console.log(signature);
+}
+
+
+window.onload = function () {
+    BookService.getAllBoooks().forEach((val, index, arr)=> console.log(val.name));
+    console.log(BookService.getBookById(1));
+    console.log(BookService.getBookById(5));
+    OverloadTest("asd");
+    OverloadTest(true);
+    OverloadTest("");
+
+};
+
+let x = new Hello();
+
 
 
