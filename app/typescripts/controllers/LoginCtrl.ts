@@ -1,13 +1,14 @@
-module App.Controllers{
+module App.Controllers {
     'use strict';
 
-    export interface IController{
+    export interface IController {
 
     }
-    export class LoginCtrl implements IController{
+
+    export class LoginCtrl {
         public static $inject = ["GooglePlusProvider"];
 
-        constructor(GooglePlus:any){
+        constructor(GooglePlus:any) {
             GooglePlus.login().then(function (authResult) {
                 console.log(authResult);
 
@@ -19,7 +20,7 @@ module App.Controllers{
             });
         }
     }
-    export class Test{
+    export class Test {
 
-}
+    }
 }

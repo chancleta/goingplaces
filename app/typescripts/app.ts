@@ -11,7 +11,7 @@ module App {
         }
 
         private static config($routeProvider:angular.route.IRouteProvider):void {
-            $routeProvider.when("/", App.Factories.RouteFactory.getInstance().getRoute(App.Controllers.Test));
+            $routeProvider.when("/", App.Factories.RouteFactory.getInstance().getRoute(App.Controllers.LoginCtrl));
         }
     }
 
@@ -41,14 +41,15 @@ module App.Factories {
 
             let route:angular.route.IRoute = {controllerAs: "vm"};
 
-            switch (typeof controllerType) {
-                case typeof App.Controllers.LoginCtrl:
+            switch (controllerType.toString()) {
+                case  App.Controllers.LoginCtrl.toString():
                     route.controller = controllerType;
                     route.templateUrl = "views/login.html";
                     break;
                 default:
                     throw "Argument is not a controller type";
             }
+            console.log(route);
             return route;
         }
 
