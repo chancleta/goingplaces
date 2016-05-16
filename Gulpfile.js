@@ -12,6 +12,7 @@ var concat = require('gulp-concat');
 var gulpFilter = require('gulp-filter');
 var usemin = require('gulp-usemin');
 var merge = require('merge2');
+var _if = require('gulp-if');
 
 var files = {
 
@@ -81,12 +82,12 @@ gulp.task("compile:typescripts", function () {
         .pipe(ts({
             sortOutput: true,
             declaration: true,
-            noExternalResolve: true
+            noExternalResolve: false
         }));
 
     return merge([
-        tsResult.dts
-            .pipe(gulp.dest(files.js.definition)),
+        //tsResult.dts
+        //    .pipe(gulp.dest(files.js.definition)),
         tsResult.js
             .pipe(gulp.dest(files.js.dir))
     ]);
@@ -145,7 +146,7 @@ gulp.task('mergejsfiles', function () {
                 sourcemaps.write(files.sourcemaps.dir)
             ]
         }))
-        .pipe(htmlmin({collapseWhitespace: true}))
+        .pipe(_if('*.html', htmlmin({collapseWhitespace: true})))
         .pipe(gulp.dest(files.dist.dir));
 });
 

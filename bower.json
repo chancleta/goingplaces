@@ -1,7 +1,8 @@
 {
   "name": "private",
   "dependencies": {
-    "material-design-lite": "^1.1.3"
+    "material-design-lite": "^1.1.3",
+    "angular-route": "^1.5.5",
   },
   "devDependencies": {},
   "private": true
