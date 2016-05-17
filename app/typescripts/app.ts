@@ -11,7 +11,7 @@ module App {
         }
 
         private static config($routeProvider:angular.route.IRouteProvider):void {
-            $routeProvider.when("/", App.Factories.RouteFactory.getInstance().getRoute(App.Controllers.LoginCtrl));
+            $routeProvider.when("/", App.Factories.RouteFactory.getInstance().getRoute<App.Controllers.LoginCtrl>(App.Controllers.LoginCtrl));
         }
     }
 
@@ -20,10 +20,10 @@ module App {
 
 
 module App.Factories {
-    'use strict';
+   'use strict';
 
     export interface IRouteFactory {
-        getRoute<T>(controllerType?:{new():T}):angular.route.IRoute;
+        getRoute<T>(controllerType : { new(...args : any[]): T ;}):angular.route.IRoute;
     }
 
     export class RouteFactory implements IRouteFactory {
@@ -37,9 +37,10 @@ module App.Factories {
             return RouteFactory.routeFactory;
         }
 
-        public getRoute<T>(controllerType:{new():T}):angular.route.IRoute {
+        public getRoute<T>(controllerType : { new(...args : any[]): T ;}):angular.route.IRoute {
 
             let route:angular.route.IRoute = {controllerAs: "vm"};
+            let type:Function = <Function>controllerType;
 
             switch (controllerType.toString()) {
                 case  App.Controllers.LoginCtrl.toString():
@@ -49,7 +50,6 @@ module App.Factories {
                 default:
                     throw "Argument is not a controller type";
             }
-            console.log(route);
             return route;
         }
 

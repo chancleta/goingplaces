@@ -1,9 +1,7 @@
 module App.Controllers {
     'use strict';
 
-    export interface IController {
 
-    }
 
     export class LoginCtrl {
         public static $inject = ["GooglePlusProvider"];
@@ -20,7 +18,5 @@ module App.Controllers {
             });
         }
     }
-    export class Test {
 
-    }
 }
