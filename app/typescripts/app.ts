@@ -8,22 +8,33 @@ module App {
 
         public static init():void {
             angular.module("app", ["ngRoute"]).config(Init.config);
+            angular.module("app").service("GoogleServiceLogin",App.Services.GoogleServiceLogin);
+
         }
 
         private static config($routeProvider:angular.route.IRouteProvider):void {
+
             $routeProvider.when("/", App.Factories.RouteFactory.getInstance().getRoute<App.Controllers.LoginCtrl>(App.Controllers.LoginCtrl));
+
+
         }
     }
 
     Init.init();
+    window.onload = () => {
+      //  let x:App.Services.GoogleServiceLogin = new App.Services.GoogleServiceLogin();
+       // x.doLogin();
+
+    }
+
 }
 
 
 module App.Factories {
-   'use strict';
+    'use strict';
 
     export interface IRouteFactory {
-        getRoute<T>(controllerType : { new(...args : any[]): T ;}):angular.route.IRoute;
+        getRoute<T>(controllerType:{ new(...args:any[]): T ;}):angular.route.IRoute;
     }
 
     export class RouteFactory implements IRouteFactory {
@@ -37,7 +48,7 @@ module App.Factories {
             return RouteFactory.routeFactory;
         }
 
-        public getRoute<T>(controllerType : { new(...args : any[]): T ;}):angular.route.IRoute {
+        public getRoute<T>(controllerType:{ new(...args:any[]): T ;}):angular.route.IRoute {
 
             let route:angular.route.IRoute = {controllerAs: "vm"};
             let type:Function = <Function>controllerType;

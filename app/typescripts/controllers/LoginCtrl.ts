@@ -2,21 +2,18 @@ module App.Controllers {
     'use strict';
 
 
-
     export class LoginCtrl {
-        public static $inject = ["GooglePlusProvider"];
+        public static $inject = ["GoogleServiceLogin"];
 
-        constructor(GooglePlus:any) {
-            GooglePlus.login().then(function (authResult) {
-                console.log(authResult);
+        constructor(public googleServiceLogin:App.Services.ILoginService) {}
 
-                GooglePlus.getUser().then(function (user) {
-                    console.log(user);
-                });
-            }, function (err) {
-                console.log(err);
-            });
+        googleLogin():void{
+            this.googleServiceLogin.doLogin().then((value)=> {
+                console.log(gapi.auth.getToken());
+
+            }).catch((value)=>console.log(value));
         }
+
     }
 
 }

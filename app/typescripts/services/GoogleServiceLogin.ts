@@ -1,77 +1,69 @@
-//module App.Services {
-//    'use strict';
-//
-//    export interface ILoginService {
-//        doLogin():void;
-//    }
-//
-//
-//    export class GoogleServiceLogin {
-//        <!--Add a button for the user to click to initiate auth sequence -->
-//
-//        private static clientId:string = '837050751313';
-//        private static apiKey:string = 'AIzaSyAdjHPT5Pb7Nu56WJ_nlrMGOAgUAtKjiPM';
-//        private static scopes:string = 'https://www.googleapis.com/auth/plus.me';
-//
-//        // Step 2: Reference the API key
-//        handleClientLoad() {
-//            gapi.client.setApiKey(GoogleServiceLogin.apiKey);
-//            window.setTimeout(this.checkAuth, 1);
-//        }
-//
-//        checkAuth() {
-//            gapi.auth.authorize({
-//                client_id: GoogleServiceLogin.clientId,
-//                scope: GoogleServiceLogin.scopes,
-//                immediate: true
-//            }, this.handleAuthResult);
-//        }
-//
-//        handleAuthResult(authResult) {
-//            var authorizeButton = document.getElementById('authorize-button');
-//            if (authResult && !authResult.error) {
-//                authorizeButton.style.visibility = 'hidden';
-//                this.makeApiCall();
-//            } else {
-//                authorizeButton.style.visibility = '';
-//                authorizeButton.onclick = this.handleAuthClick;
-//            }
-//        }
-//
-//        // Step 3: get authorization to use private data
-//        handleAuthClick(event) {
-//            gapi.auth.authorize({
-//                client_id: GoogleServiceLogin.clientId,
-//                scope: GoogleServiceLogin.scopes,
-//                immediate: false
-//            }, this.handleAuthResult);
-//            return false;
-//        }
-//
-//        // Load the API and make an API call.  Display the results on the screen.
-//        makeApiCall() {
-//            // Step 4: Load the Google+ API
-//            gapi.client.load('plus', 'v1').then(function () {
-//                // Step 5: Assemble the API request
-//                var request = gapi.client.plus.people.get({
-//                    'userId': 'me'
-//                });
-//                // Step 6: Execute the API request
-//                request.then(function (resp) {
-//                    var heading = document.createElement('h4');
-//                    var image = document.createElement('img');
-//                    image.src = resp.result.image.url;
-//                    heading.appendChild(image);
-//                    heading.appendChild(document.createTextNode(resp.result.displayName));
-//
-//                    document.getElementById('content').appendChild(heading);
-//                }, function (reason) {
-//                    console.log('Error: ' + reason.result.error.message);
-//                });
-//            });
-//        }
-//
-//    }
-//
-//
-//}
+/// <reference path="../../../typings/tsd.d.ts" />
+
+module App.Services {
+    'use strict';
+
+    export interface ILoginService {
+        doLogin():angular.IPromise<boolean>;
+        doLogout():void;
+    }
+
+
+    export class GoogleServiceLogin implements ILoginService {
+
+
+        private static clientId:string = '595776294589-mb6bjmkrq058ksr0kq2i4c99iiig96gt.apps.googleusercontent.com';
+        private static apiKey:string = 'CBd9ew5k0NUhPzZLZQEi1tdt';
+        private static scopes:string = 'https://www.googleapis.com/auth/plus.me';
+
+        public static $inject = ["$q", "$http"];
+        public deferred:angular.IDeferred<boolean>;
+
+        constructor(promise:angular.IQService, public $http:angular.IHttpService) {
+            this.deferred = promise.defer<boolean>();
+        }
+
+        private setApiKey():void {
+            gapi.client.setApiKey(GoogleServiceLogin.apiKey);
+        }
+
+        private revokeAccessToken():void {
+            this.$http.jsonp(
+                "https://accounts.google.com/o/oauth2/revoke",
+                {
+                    params: {
+                        "callback": "JSON_CALLBACK",
+                        "token": gapi.auth.getToken().access_token
+                    },
+                    responseType: "application/json"
+                }
+            );
+        }
+
+        doLogin():angular.IPromise<boolean> {
+            let self = this;
+            this.setApiKey();
+
+            gapi.auth.authorize({
+                client_id: GoogleServiceLogin.clientId,
+                scope: GoogleServiceLogin.scopes,
+                immediate: false
+            }, (authResult)=> {
+                if (authResult && !authResult.error) {
+                    self.deferred.resolve(true);
+                    self.revokeAccessToken();
+                }
+                self.deferred.reject(false);
+            });
+
+            return <angular.IPromise<boolean>> this.deferred.promise;
+        }
+
+        doLogout() {
+
+            //gapi.auth.setToken(null);
+            //gapi.auth.signOut();
+        }
+    }
+
+}
