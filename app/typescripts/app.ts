@@ -9,6 +9,7 @@ module App {
         public static init():void {
             angular.module("app", ["ngRoute"]).config(Init.config);
             angular.module("app").service("GoogleServiceLogin",App.Services.GoogleServiceLogin);
+            angular.module("app").service("JavaScriptResourceLoader",App.Services.JavaScriptResourceLoader);
 
         }
 
