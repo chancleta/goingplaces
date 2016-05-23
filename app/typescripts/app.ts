@@ -11,6 +11,7 @@ module App {
             angular.module("app").service("GoogleServiceLogin",App.Services.GoogleServiceLogin);
             angular.module("app").service("JavaScriptResourceLoader",App.Services.JavaScriptResourceLoader);
 
+
         }
 
         private static config($routeProvider:angular.route.IRouteProvider):void {

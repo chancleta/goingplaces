@@ -1,50 +1,38 @@
 /// <reference path="../../../typings/tsd.d.ts" />
 namespace App.Services {
 
-    export interface IResource {
+    export interface IAsynchResource {
         url:string;
-        id:string;
-        placement:string;
-    }
+        loadResource():angular.IPromise<boolean>;
+        id?:string;
+   }
 
-    export interface IResourceLoader {
-        loadResource(resource:App.Services.IResource):angular.IPromise<boolean>;
-        loadResources(resource:Array<App.Services.IResource>):Array<angular.IPromise<boolean>>;
-    }
-
-    export class JavaScriptResourceLoader implements IResourceLoader {
-
+    export class JavaScriptResourceLoader implements IAsynchResource {
 
         public static $inject = ["$q"];
         public deferred:angular.IDeferred<boolean>;
+        public url:string;
+        public id:string;
+        public static placement = "script";
 
-        constructor(promise:angular.IQService) {
-            this.deferred = promise.defer<boolean>();
+        constructor(public promise:angular.IQService) {
+
         }
 
-        loadResource(resource:App.Services.IResource):angular.IPromise<boolean> {
+        loadResource():angular.IPromise<boolean> {
+            this.deferred = this.promise.defer<boolean>();
 
-            let scriptTag, loadAfter = document.getElementsByTagName(resource.placement)[0];
-            if (document.getElementById(resource.id)) return;
-            scriptTag = document.createElement(resource.placement);
-            console.log(scriptTag);
+            let scriptTag, loadAfter = document.getElementsByTagName(JavaScriptResourceLoader.placement)[0];
+            if (document.getElementById(this.id)) return;
+            scriptTag = document.createElement(JavaScriptResourceLoader.placement);
 
-            scriptTag.id = resource.id;
-            scriptTag.src = resource.url;//"//connect.facebook.net/en_US/sdk.js";
+            scriptTag.id = this.id;
+            scriptTag.src = this.url;
             loadAfter.parentNode.insertBefore(scriptTag, loadAfter);
             scriptTag.onload = ()=> this.deferred.resolve(true);
 
             return <angular.IPromise<boolean>> this.deferred.promise;
 
-        }
-
-        loadResources(resources:Array<App.Services.IResource>):Array<angular.IPromise<boolean>> {
-            let promises:Array<angular.IPromise<boolean>> = [];
-
-            for (let resource of resources) {
-                promises.push(this.loadResource(resource));
-            }
-            return promises;
         }
 
 
