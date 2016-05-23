@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"  ng-app="foundersmap">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -14,20 +14,22 @@
     <link href="styles/style.css" rel="stylesheet"/>
 
 </head>
-<body ng-app="app">
-
-<div class="container">
+<body>
+<div class="ngView">
     <ng-view></ng-view>
+
 </div>
+
 
 <!-- bower:js -->
 <script src="js/vendor.js" type="application/javascript"></script>
 <!-- endbower -->
 
 <!-- build:js js/main.js -->
-<script src="js/services/ResourceLoader.js" type="application/javascript"></script>
-<script src="js/services/GoogleServiceLogin.js" type="application/javascript"></script>
-<script src="js/controllers/LoginCtrl.js" type="application/javascript"></script>
+<script src="js/models/CSVEntryModel.js" type="application/javascript"></script>
+<script src="js/models/CVSImportModel.js" type="application/javascript"></script>
+
+<script src="js/controllers/CSVImporterCtrl.js" type="application/javascript"></script>
 <script src="js/app.js" type="application/javascript"></script>
 
 <!-- endbuild -->

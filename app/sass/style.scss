@@ -1,135 +1,179 @@
 @import "../../bower_components/material-design-lite/src/material-design-lite";
-$logoPadding: 7px;
-$logoHeight:  24px;
-$logoWidth: 24px;
 
+.importer {
+  .importer-navMenu {
+    .mdl-navigation__link:hover {
+      background-color: #00BCD4;
+    }
+  }
+  .mdl-layout__drawer-button {
+    color: #00BCD4;
+  }
 
-.demo-ribbon {
-  width: 100%;
-  height: 40vh;
-  //background-color: #3F51B5;
-  -webkit-flex-shrink: 0;
-  -ms-flex-negative: 0;
-  flex-shrink: 0;
-  z-index: 1;
-}
+  .importer-menuHeader {
+    padding: 16px;
+    .importer-menuHeader__profileImage {
+      width: 48px;
+      height: 48px;
+      border-radius: 24px;
+    }
+  }
 
-.demo-main {
-  margin-top: -35vh;
-  -webkit-flex-shrink: 0;
-  -ms-flex-negative: 0;
-  flex-shrink: 0;
-  z-index: 2;
-}
-
-.demo-header .mdl-layout__header-row {
-  padding-left: 40px;
-}
-
-.demo-container {
-  max-width: 1600px;
-  width: calc(100% - 16px);
-}
-
-.demo-content {
-  border-radius: 2px;
-  padding: 80px 56px;
-  margin-bottom: 80px;
-}
-
-.demo-layout.is-small-screen .demo-content {
-  padding: 40px 28px;
-}
-
-.demo-footer {
-  padding-left: 40px;
-}
-
-.demo-footer .mdl-mini-footer--link-list a {
-  font-size: 13px;
-}
-
-.demo-content {
-  margin: 0 auto 100px auto;
-}
-
-.login {
-  .mdl-card {
-    margin: 0 auto;
-    .mdl-card__title {
-      height: 120px;
-      background: rgb(63, 81, 181);
-      color: #fff;
-      flex-direction: column;
-      justify-content: center;
-      span{
-        margin-top: 10px;
+  .importer-form {
+    .form-formControls {
+      .form-formControls__title {
+        margin-top: 0;
+        margin-bottom: 0;
       }
     }
-
-    .mdl-textfield, .mdl-button.mdl-js-button {
-      display: block;
-      margin: 0 auto;
-      width: 80%;
-      .mdl-textfield__label {
-        color: rgba(0, 0, 0, 0.55);
+    .form-csvData {
+      .form-csvData__title {
+        text-align: center;
+        margin: 0;
       }
-    }
-    .mdl-card__title-text {
-      margin: 0 auto;
-    }
-    .mdl-card--border {
-      padding-bottom: 20px;
-      padding-top: 20px;
-    }
-  }
-  .loginwith{
-    margin-top: 10px;
-  }
-  .logos,.loginwith{
-    text-align: center;
-  }
-  .material-icons{
-    position: absolute;
-    left: -30px;
-  }
 
-}
+      .form-csvData__textArea {
+        min-height: 250px;
+        border-top: 1px solid rgba(0, 0, 0, 0.12);
 
-.logo-button{
-  height: $logoPadding*2 + $logoHeight !important;
-  width:  $logoPadding*2 + $logoWidth !important;
-  padding: 0 !important;
-  min-width:  $logoPadding*2 + $logoWidth !important;
-  display: inline-block !important;
-  margin:0 !important;
-  &.logo-button--circle{
-    border-radius: 50%;
-    .mdl-button__ripple-container{
-      border-radius: 50%;
+      }
+
     }
   }
 
 }
 
-svg {
+//$logoPadding: 7px;
+//$logoHeight:  24px;
+//$logoWidth: 24px;
 
-  &.logo {
-    height: $logoHeight;
-    width: $logoWidth;
-    &.logo-circle {
-      border-radius: 50%;
-      padding: $logoPadding;
-      &.logo-circle--google {
-        background: #D32F2F;
-      }
-      &.logo-circle--facebook{
-        background: #0D47A1;
-      }
-    }
-    &.logo--clickable{
-      cursor: pointer;
-    }
-
-  }
-}
+//
+//.demo-ribbon {
+//  width: 100%;
+//  height: 40vh;
+//  //background-color: #3F51B5;
+//  -webkit-flex-shrink: 0;
+//  -ms-flex-negative: 0;
+//  flex-shrink: 0;
+//  z-index: 1;
+//}
+//
+//.demo-main {
+//  margin-top: -35vh;
+//  -webkit-flex-shrink: 0;
+//  -ms-flex-negative: 0;
+//  flex-shrink: 0;
+//  z-index: 2;
+//}
+//
+//.demo-header .mdl-layout__header-row {
+//  padding-left: 40px;
+//}
+//
+//.demo-container {
+//  max-width: 1600px;
+//  width: calc(100% - 16px);
+//}
+//
+//.demo-content {
+//  border-radius: 2px;
+//  padding: 80px 56px;
+//  margin-bottom: 80px;
+//}
+//
+//.demo-layout.is-small-screen .demo-content {
+//  padding: 40px 28px;
+//}
+//
+//.demo-footer {
+//  padding-left: 40px;
+//}
+//
+//.demo-footer .mdl-mini-footer--link-list a {
+//  font-size: 13px;
+//}
+//
+//.demo-content {
+//  margin: 0 auto 100px auto;
+//}
+//
+//.login {
+//  .mdl-card {
+//    margin: 0 auto;
+//    .mdl-card__title {
+//      height: 120px;
+//      background: rgb(63, 81, 181);
+//      color: #fff;
+//      flex-direction: column;
+//      justify-content: center;
+//      span{
+//        margin-top: 10px;
+//      }
+//    }
+//
+//    .mdl-textfield, .mdl-button.mdl-js-button {
+//      display: block;
+//      margin: 0 auto;
+//      width: 80%;
+//      .mdl-textfield__label {
+//        color: rgba(0, 0, 0, 0.55);
+//      }
+//    }
+//    .mdl-card__title-text {
+//      margin: 0 auto;
+//    }
+//    .mdl-card--border {
+//      padding-bottom: 20px;
+//      padding-top: 20px;
+//    }
+//  }
+//  .loginwith{
+//    margin-top: 10px;
+//  }
+//  .logos,.loginwith{
+//    text-align: center;
+//  }
+//  .material-icons{
+//    position: absolute;
+//    left: -30px;
+//  }
+//
+//}
+//
+//.logo-button{
+//  height: $logoPadding*2 + $logoHeight !important;
+//  width:  $logoPadding*2 + $logoWidth !important;
+//  padding: 0 !important;
+//  min-width:  $logoPadding*2 + $logoWidth !important;
+//  display: inline-block !important;
+//  margin:0 !important;
+//  &.logo-button--circle{
+//    border-radius: 50%;
+//    .mdl-button__ripple-container{
+//      border-radius: 50%;
+//    }
+//  }
+//
+//}
+//
+//svg {
+//
+//  &.logo {
+//    height: $logoHeight;
+//    width: $logoWidth;
+//    &.logo-circle {
+//      border-radius: 50%;
+//      padding: $logoPadding;
+//      &.logo-circle--google {
+//        background: #D32F2F;
+//      }
+//      &.logo-circle--facebook{
+//        background: #0D47A1;
+//      }
+//    }
+//    &.logo--clickable{
+//      cursor: pointer;
+//    }
+//
+//  }
+//}

@@ -7,27 +7,16 @@ module App {
         public static $inject = ["$routeProvider"];
 
         public static init():void {
-            angular.module("app", ["ngRoute"]).config(Init.config);
-            angular.module("app").service("GoogleServiceLogin",App.Services.GoogleServiceLogin);
-            angular.module("app").service("JavaScriptResourceLoader",App.Services.JavaScriptResourceLoader);
-
-
-        }
+            angular.module("foundersmap", ["ngRoute"]).config(Init.config);
+       }
 
         private static config($routeProvider:angular.route.IRouteProvider):void {
-
-            $routeProvider.when("/", App.Factories.RouteFactory.getInstance().getRoute<App.Controllers.LoginCtrl>(App.Controllers.LoginCtrl));
-
-
+            $routeProvider.when("/", App.Factories.RouteFactory.getInstance().getRoute<App.Controllers.CSVImporterCtrl>(App.Controllers.CSVImporterCtrl));
         }
     }
 
     Init.init();
-    window.onload = () => {
-      //  let x:App.Services.GoogleServiceLogin = new App.Services.GoogleServiceLogin();
-       // x.doLogin();
 
-    }
 
 }
 
@@ -56,9 +45,9 @@ module App.Factories {
             let type:Function = <Function>controllerType;
 
             switch (controllerType.toString()) {
-                case  App.Controllers.LoginCtrl.toString():
+                case  App.Controllers.CSVImporterCtrl.toString():
                     route.controller = controllerType;
-                    route.templateUrl = "views/login.html";
+                    route.templateUrl = "views/csvImporter.html";
                     break;
                 default:
                     throw "Argument is not a controller type";
