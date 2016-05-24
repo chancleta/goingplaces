@@ -2,7 +2,8 @@ module App.Models{
 
     export interface CSVEntryModel{
         companyName:string;
-        founderCity:string;
+        founder:string;
+        city:string;
         country:string;
         postalCode:string;
         street:string;
@@ -10,5 +11,9 @@ module App.Models{
         homePage:string;
         latitude:string;
         longitude:string;
+    }
+
+    export enum CSVHeader{
+        Id,CompanyName,Founder,City,Country,PostalCode, Street,Photo,HomePage
     }
 }

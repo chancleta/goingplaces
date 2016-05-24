@@ -20,6 +20,45 @@
   }
 
   .importer-form {
+
+    .mdl-textfield.is-invalid .mdl-textfield__input {
+      border-bottom: 1px solid rgba(0, 0, 0, .12);
+    }
+
+    .mdl-textfield--floating-label.is-invalid .mdl-textfield__label {
+      color: rgba(0, 0, 0, .26);
+    }
+
+    .mdl-textfield--floating-label.is-focused .mdl-textfield__label,
+    .mdl-textfield--floating-label.is-dirty .mdl-textfield__label {
+      color: rgb(63, 81, 181);
+    }
+
+    .mdl-textfield.is-invalid .mdl-textfield__label:after {
+      background-color: rgb(63, 81, 181);
+    }
+    /*Validation styles based on MDL*/
+
+    .ng-invalid.ng-invalid.ng-touched {
+      border-color: rgb(222, 50, 38);
+      box-shadow: none;
+    }
+
+    .ng-invalid.ng-invalid.ng-touched + label {
+      color: rgb(222, 50, 38);
+      font-size: 12px;
+    }
+
+    .ng-invalid.ng-invalid.ng-touched + label:after {
+      background-color: rgb(222, 50, 38);
+    }
+
+    .ng-invalid.ng-invalid.ng-untouched + label + span{
+      visibility: hidden;
+    }
+
+
+
     .form-formControls {
       .form-formControls__title {
         margin-top: 0;
