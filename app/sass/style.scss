@@ -57,7 +57,9 @@
       visibility: hidden;
     }
 
-
+    button{
+      margin: 0 auto;
+    }
 
     .form-formControls {
       .form-formControls__title {
@@ -82,6 +84,9 @@
 
 }
 
+#toast{
+  background-color: rgb(222, 50, 38);
+}
 //$logoPadding: 7px;
 //$logoHeight:  24px;
 //$logoWidth: 24px;
