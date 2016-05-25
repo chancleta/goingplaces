@@ -1,0 +1,66 @@
+<div class="mdl-grid">
+
+    <div class="mdl-shadow--2dp mdl-color--white mdl-cell mdl-cell--12-col">
+
+        <form action="#" class="importer-form" name="csvForm">
+
+            <div class="mdl-grid">
+
+                <table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-cell  mdl-cell--12-col">
+                    <thead>
+                    <tr>
+                        <th>Company Name</th>
+                        <th>Founder</th>
+                        <th>City</th>
+                        <th>Country</th>
+                        <th>Postal Code</th>
+                        <th>Street</th>
+                        <th>Photo</th>
+                        <th>Home Page</th>
+                        <th>Latitude</th>
+                        <th>Longitude</th>
+                        <th>Marker's Label</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                            <tr ng-repeat="entry in va.dataEntries" >
+                               <td>
+                                    {{entry.companyName}}
+                                </td>
+                                <td>
+                                    {{entry.founder}}
+                                </td>
+                                <td>
+                                    {{entry.city}}
+                                </td>
+                                <td>
+                                    {{entry.postalCode}}
+                                </td>
+                                <td>
+                                    {{entry.street}}
+                                </td>
+                                <td>
+                                    {{entry.photo}}
+                                </td>
+                                <td>
+                                    {{entry.homePage}}
+                                </td>
+                                <td>
+                                    {{entry.latitude}}
+                                </td>
+                                <td>
+                                    {{entry.longitude}}
+                                </td>
+                                <td>
+                                    {{entry.markerName}}
+                                </td>
+                            </tr>
+                    </tbody>
+                </table>
+
+            </div>
+
+        </form>
+
+    </div>
+</div>

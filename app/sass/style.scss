@@ -2,7 +2,7 @@
 
 .importer {
   .importer-navMenu {
-    .mdl-navigation__link:hover {
+    .mdl-navigation__link:hover,.mdl-navigation__link.is-active {
       background-color: #00BCD4;
     }
   }
@@ -84,9 +84,13 @@
 
 }
 
-#toast{
+#toastError{
   background-color: rgb(222, 50, 38);
 }
+#toastSuccess{
+  background-color: rgb(76, 175, 80);
+}
+
 //$logoPadding: 7px;
 //$logoHeight:  24px;
 //$logoWidth: 24px;

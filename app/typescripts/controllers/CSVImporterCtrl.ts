@@ -1,8 +1,31 @@
 /// <reference path="../models/CSVEntryModel.ts" />
 /// <reference path="../models/CVSImportModel.ts" />
+/// <reference path="../../../typings/tsd.d.ts" />
 
 module App.Controllers {
     'use strict';
+    export class DashboardCtrl {
+        constructor() {
+            document.querySelector("title").innerHTML = "Dashboard:Importer";
+        }
+
+        public setActiveView($event:Event):void {
+            if (angular.element($event.currentTarget).hasClass("is-active"))
+                return;
+            angular.element($event.currentTarget).parent().find("a").removeClass("is-active");
+            angular.element($event.currentTarget).addClass("is-active");
+            document.querySelector("#dashboardTitle").innerHTML = angular.element($event.currentTarget).attr("data-dashboard-title");
+            document.querySelector("title").innerHTML = angular.element($event.currentTarget).attr("data-title");
+        }
+    }
+    export class SummaryCtrl {
+        public static $inject = ["localStorageService"];
+        public dataEntries:Array<App.Models.CSVEntryModel>;
+
+        constructor(localStorage:angular.local.storage.ILocalStorageService) {
+            this.dataEntries = localStorage.get<Array<App.Models.CSVEntryModel>>("csvEntries");
+        }
+    }
 
     export class CSVImporterCtrl {
         public importData:App.Models.CSVImportModel;
@@ -11,6 +34,7 @@ module App.Controllers {
 
         constructor(public localStorage:angular.local.storage.ILocalStorageService) {
             this.setDefaultScopeValues();
+
         }
 
         public processCSV(formData:angular.IFormController):void {
@@ -22,7 +46,7 @@ module App.Controllers {
 
             /**
              * Splitting the CSV content into lines
-            * @type {string[]}
+             * @type {string[]}
              */
             let lines:Array<string> = this.importData.csvContent.split(/\n/);
 
@@ -45,14 +69,14 @@ module App.Controllers {
             this.localStorage.set("csvEntries", currentEntries.concat(this.getCSVEnriesFromData(lines)));
 
             /*
-            * Resetting all the values and showing the user a notification about the status of the import
-            * */
+             * Resetting all the values and showing the user a notification about the status of the import
+             */
             this.setDefaultScopeValues();
             this.processingData = false;
             formData.$setUntouched();
             formData.$setPristine();
 
-            document.querySelector('#toast').MaterialSnackbar.showSnackbar({
+            document.querySelector('#toastSuccess').MaterialSnackbar.showSnackbar({
                 message: "Data successfully imported",
                 timeout: 10000
             });
@@ -81,7 +105,7 @@ module App.Controllers {
             }
             /**
              * if we do, then we split the first line ( header line ) into an array separated by the users input
-              * @type {any[]}
+             * @type {any[]}
              */
             let headersArray = lines[0].split(separator).map(Function.prototype.call, String.prototype.trim);
 
@@ -125,7 +149,7 @@ module App.Controllers {
              * Showing the errors to the user
              */
             if (message !== undefined)
-                document.querySelector('#toast').MaterialSnackbar.showSnackbar({
+                document.querySelector('#toastError').MaterialSnackbar.showSnackbar({
                     message: message,
                     timeout: 10000
                 });

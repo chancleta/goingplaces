@@ -4,37 +4,29 @@ module App {
     'use strict';
 
     class Init {
+
         public static $inject = ["$routeProvider", "$stateProvider", "$urlRouterProvider"];
 
         public static init():void {
-            angular.module("foundersmap", ["ngRoute", "LocalStorageModule"]).config(Init.config);
+            angular.module("foundersmap", ["LocalStorageModule", "ui.router"]).config(Init.config);
         }
 
-        private static config($routeProvider:angular.route.IRouteProvider):void {
+        private static config($urlRouterProvider:angular.ui.router.IUrlRouterProvider, $stateProvider:angular.ui.router.IStateProvider):void {
 
+            //$urlRouterProvider.otherwise("/");
+            $urlRouterProvider.when('', '/');
+            $urlRouterProvider.when('/dashboard', '/dashboard/import');
+            $urlRouterProvider.when('/dashboard/', '/dashboard/import');
 
-            //  $urlRouterProvider.otherwise("/");
-            //
-            // Now set up the states
-            //$stateProvider
-            //    .state('importDashboard', {
-            //        url: "/dashboard",
-            //        templateUrl: "views/importDashboard.html",
-            //        abstract: true
-            //    })
-            //    .state('importDashboard.import', {
-            //        url: "/dashboard/import",
-            //        templateUrl: "views/csvImporter.html",
-            //        controller: App.Controllers.CSVImporterCtrl
-            //    });
+            $stateProvider
+                .state('dashboard', App.Factories.RouteFactory.getInstance().getRoute(App.Controllers.DashboardCtrl))
+                .state('dashboard.import', App.Factories.RouteFactory.getInstance().getRoute(App.Controllers.CSVImporterCtrl))
+                .state('dashboard.summary', App.Factories.RouteFactory.getInstance().getRoute(App.Controllers.SummaryCtrl));
 
-            $routeProvider.when("/", App.Factories.RouteFactory.getInstance().getRoute<App.Controllers.CSVImporterCtrl>(App.Controllers.CSVImporterCtrl));
         }
     }
 
     Init.init();
-
-
 }
 
 
@@ -58,12 +50,24 @@ module App.Factories {
 
         public getRoute<T>(controllerType:{ new(...args:any[]): T ;}):angular.route.IRoute {
 
-            let route:angular.route.IRoute = {controllerAs: "vm"};
+            let route:angular.ui.IState = {controllerAs: "vm"};
 
             switch (controllerType.toString()) {
                 case  App.Controllers.CSVImporterCtrl.toString():
+                    route.url = "/import";
                     route.controller = controllerType;
                     route.templateUrl = "views/csvImporter.html";
+                    break;
+                case  App.Controllers.DashboardCtrl.toString():
+                    route.url = "/dashboard";
+                    route.controller = controllerType;
+                    route.templateUrl = "views/importDashboard.html";
+                    route.abstract = true;
+                    break;
+                case  App.Controllers.SummaryCtrl.toString():
+                    route.url = "/summary";
+                    route.controller = controllerType;
+                    route.templateUrl = "views/summary.html";
                     break;
                 default:
                     throw "Argument is not a controller type";

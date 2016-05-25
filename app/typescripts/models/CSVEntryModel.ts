@@ -11,6 +11,7 @@ module App.Models{
         homePage:string;
         latitude:string;
         longitude:string;
+        markerLabel?:string;
     }
 
     export enum CSVHeader{
