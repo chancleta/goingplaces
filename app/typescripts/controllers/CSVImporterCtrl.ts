@@ -5,35 +5,59 @@
 module App.Controllers {
     'use strict';
     export class DashboardCtrl {
-        constructor() {
-            document.querySelector("title").innerHTML = "Dashboard:Importer";
-        }
+        public static $inject = ["$scope"];
 
-        public setActiveView($event:Event):void {
-            if (angular.element($event.currentTarget).hasClass("is-active"))
-                return;
-            angular.element($event.currentTarget).parent().find("a").removeClass("is-active");
-            angular.element($event.currentTarget).addClass("is-active");
-            document.querySelector("#dashboardTitle").innerHTML = angular.element($event.currentTarget).attr("data-dashboard-title");
-            document.querySelector("title").innerHTML = angular.element($event.currentTarget).attr("data-title");
+        constructor($scope:angular.IScope) {
+
+            /**
+             * We lister for the event App.Models.DashboardEvents.changeView, to update the html title, to set the proper
+             * list item to active and the change the header name to its respective screen
+             */
+            $scope.$on(App.Models.DashboardEvents[App.Models.DashboardEvents.changeView], (event, args)=> {
+                let finder:App.Models.IDashboardEventArg = <App.Models.IDashboardEventArg>args;
+
+                let newActiveItem:HTMLElement =  <HTMLElement> document.querySelector(finder.id);
+                /**
+                 * Each A tag has the information of its view, what the title of the page should be and
+                 * the header of the dashboard
+                 * @type {string}
+                 */
+                let newTitle:string = newActiveItem.getAttribute("data-title");
+                let newHeader:string = newActiveItem.getAttribute("data-dashboard-title");
+
+                let dashboardHeader:HTMLElement = <HTMLElement> document.querySelector("#dashboardTitle");
+                let documentTitle:HTMLElement = <HTMLElement> document.querySelector("title");
+                let activeMenuItem:HTMLElement = <HTMLElement> document.querySelectorAll("#dashboardMenu a.mdl-navigation__link.is-active");
+
+                dashboardHeader.innerHTML = newHeader;
+                documentTitle.innerHTML = newTitle;
+
+                angular.element(activeMenuItem).removeClass("is-active");
+                angular.element(newActiveItem).addClass("is-active");
+
+            });
         }
     }
-    export class SummaryCtrl {
-        public static $inject = ["localStorageService"];
-        public dataEntries:Array<App.Models.CSVEntryModel>;
 
-        constructor(localStorage:angular.local.storage.ILocalStorageService) {
-            this.dataEntries = localStorage.get<Array<App.Models.CSVEntryModel>>("csvEntries");
+    export class SummaryCtrl {
+        public static $inject = ["$scope", "localStorageService"];
+        public dataEntries:Array<App.Models.ICSVEntryModel>;
+
+        constructor($scope:angular.IScope, localStorage:angular.local.storage.ILocalStorageService) {
+            this.dataEntries = localStorage.get<Array<App.Models.ICSVEntryModel>>("csvEntries");
+            //console.log(this.dataEntries);
+            $scope.$emit(App.Models.DashboardEvents[App.Models.DashboardEvents.changeView], {id: "#dashboardSummary"});
         }
     }
 
     export class CSVImporterCtrl {
         public importData:App.Models.CSVImportModel;
         public processingData:boolean = false;
-        public static $inject = ["localStorageService"];
+        public static $inject = ["$scope", "localStorageService"];
 
-        constructor(public localStorage:angular.local.storage.ILocalStorageService) {
+        constructor($scope:angular.IScope, public localStorage:angular.local.storage.ILocalStorageService) {
             this.setDefaultScopeValues();
+            $scope.$emit(App.Models.DashboardEvents[App.Models.DashboardEvents.changeView], {id: "#dashboardImport"});
 
         }
 
@@ -62,9 +86,9 @@ module App.Controllers {
 
             /**
              * Retreving the current saved data from the localStorage
-             * @type {Array<App.Models.CSVEntryModel>}
+             * @type {AIrray<App.Models.CSVEntryModel>}
              */
-            let currentEntries = this.localStorage.get<Array<App.Models.CSVEntryModel>>("csvEntries");
+            let currentEntries = this.localStorage.get<Array<App.Models.ICSVEntryModel>>("csvEntries");
             currentEntries = currentEntries == null ? [] : currentEntries;
             this.localStorage.set("csvEntries", currentEntries.concat(this.getCSVEnriesFromData(lines)));
 
@@ -158,9 +182,9 @@ module App.Controllers {
         }
 
 
-        private getCSVEnriesFromData(lines:Array<string>):Array<App.Models.CSVEntryModel> {
+        private getCSVEnriesFromData(lines:Array<string>):Array<App.Models.ICSVEntryModel> {
 
-            let entryArray:Array<App.Models.CSVEntryModel> = [];
+            let entryArray:Array<App.Models.ICSVEntryModel> = [];
             let separator = this.getSeparatorString();
             let headersArray = lines[0].split(separator).map(Function.prototype.call, String.prototype.trim);
 
@@ -178,7 +202,7 @@ module App.Controllers {
                  * For each line we create a new entry object and push it into the array
                  * @type {{companyName: string, founder: string, city: string, country: string, postalCode: string, street: string, photo: string, homePage: string, latitude: string, longitude: string, markerName: string}}
                  */
-                let entry:App.Models.CSVEntryModel = {
+                let entry:App.Models.ICSVEntryModel = {
                     companyName: line[App.Models.CSVHeader.CompanyName],
                     founder: line[App.Models.CSVHeader.Founder],
                     city: line[App.Models.CSVHeader.City],

@@ -1,7 +1,7 @@
 <div class="importer mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
     <header class="mdl-layout__header mdl-color--grey-100 mdl-color-text--grey-600">
         <div class="mdl-layout__header-row">
-            <span id="dashboardTitle" class="mdl-layout-title">Founder's Map Quest: Importer</span>
+            <span id="dashboardTitle" class="mdl-layout-title"></span>
         </div>
     </header>
     <div class="mdl-layout__drawer mdl-color--blue-grey-900 mdl-color-text--white">
@@ -10,12 +10,12 @@
                  class="importer-menuHeader__profileImage">
         </header>
         <nav class="importer-navMenu mdl-navigation mdl-color--blue-grey-800" id="dashboardMenu">
-           <a ui-sref="dashboard.import" class="mdl-navigation__link mdl-color-text--white is-active" id="dashboard.import"
+           <a ui-sref="dashboard.import" class="mdl-navigation__link mdl-color-text--white" id="dashboardImport"
               ng-click="vm.setActiveView($event)" data-dashboard-title="Founder's Map Quest: Importer" data-title="Dashboard:Importer">
                 <i class="mdl-color-text--white material-icons" role="presentation">library_add</i>
                Importer
             </a>
-            <a ui-sref="dashboard.summary" class="mdl-navigation__link mdl-color-text--white" id="dashboard.summary"
+            <a ui-sref="dashboard.summary" class="mdl-navigation__link mdl-color-text--white" id="dashboardSummary"
                ng-click="vm.setActiveView($event)" data-dashboard-title="Founder's Map Quest: Summary" data-title="Dashboard:Summary">
                 <i class="mdl-color-text--white material-icons" role="presentation">list</i>
                 Summary

@@ -5,13 +5,18 @@ module App {
 
     class Init {
 
-        public static $inject = ["$routeProvider", "$stateProvider", "$urlRouterProvider"];
+        public static $inject = ["$routeProvider", "$stateProvider", "$urlRouterProvider", "$rootScope"];
 
         public static init():void {
             angular.module("foundersmap", ["LocalStorageModule", "ui.router"]).config(Init.config);
+            angular.module("foundersmap").run(Init.run);
         }
 
-        private static config($urlRouterProvider:angular.ui.router.IUrlRouterProvider, $stateProvider:angular.ui.router.IStateProvider):void {
+        private static run($rootScope:angular.IRootScopeService) {
+            $rootScope.$on('$stateChangeSuccess', () => angular.element(document).ready(() => componentHandler.upgradeAllRegistered() ));
+        }
+
+        private static config($urlRouterProvider:angular.ui.IUrlRouterProvider, $stateProvider:angular.ui.IStateProvider):void {
 
             //$urlRouterProvider.otherwise("/");
             $urlRouterProvider.when('', '/');
@@ -51,7 +56,7 @@ module App.Factories {
         public getRoute<T>(controllerType:{ new(...args:any[]): T ;}):angular.route.IRoute {
 
             let route:angular.ui.IState = {controllerAs: "vm"};
-
+            route.controllerAs = "vm";
             switch (controllerType.toString()) {
                 case  App.Controllers.CSVImporterCtrl.toString():
                     route.url = "/import";

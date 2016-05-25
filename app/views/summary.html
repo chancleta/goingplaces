@@ -4,27 +4,31 @@
 
         <form action="#" class="importer-form" name="csvForm">
 
-            <div class="mdl-grid">
+            <div class="  table-responsive">
 
-                <table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-cell  mdl-cell--12-col">
+                <table class="mdl-data-table table">
                     <thead>
                     <tr>
                         <th>Company Name</th>
                         <th>Founder</th>
                         <th>City</th>
                         <th>Country</th>
-                        <th>Postal Code</th>
-                        <th>Street</th>
+                        <th class="mdl-cell--hide-tablet mdl-cell--hide-phone">Postal Code</th>
+                        <th class="mdl-cell--hide-tablet mdl-cell--hide-phone">Street</th>
                         <th>Photo</th>
                         <th>Home Page</th>
-                        <th>Latitude</th>
-                        <th>Longitude</th>
-                        <th>Marker's Label</th>
+                        <th class="mdl-cell--hide-phone">Latitude</th>
+                        <th class="mdl-cell--hide-phone">Longitude</th>
+                        <th class="mdl-cell--hide-phone">Marker's Label</th>
                     </tr>
                     </thead>
                     <tbody>
-                            <tr ng-repeat="entry in va.dataEntries" >
+                            <tr ng-repeat="entry in vm.dataEntries" >
                                <td>
+                                   <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="checkbox{{$index}}">
+                                       <input type="checkbox" id="checkbox{{$index}}" class="mdl-checkbox__input" checked>
+                                   </label>
+
                                     {{entry.companyName}}
                                 </td>
                                 <td>
@@ -34,24 +38,31 @@
                                     {{entry.city}}
                                 </td>
                                 <td>
+                                    {{entry.country}}
+                                </td>
+                                <td class="mdl-cell--hide-tablet mdl-cell--hide-phone">
                                     {{entry.postalCode}}
                                 </td>
-                                <td>
+                                <td class="mdl-cell--hide-tablet mdl-cell--hide-phone">
                                     {{entry.street}}
                                 </td>
                                 <td>
-                                    {{entry.photo}}
+                                    <button class="mdl-button mdl-js-button mdl-button--icon mdl-button--colored"
+                                            data-img-src="{{entry.photo}}" type="button">
+                                        <i class="material-icons">pageview</i>
+                                    </button>
+
                                 </td>
                                 <td>
                                     {{entry.homePage}}
                                 </td>
-                                <td>
+                                <td class="mdl-cell--hide-phone">
                                     {{entry.latitude}}
                                 </td>
-                                <td>
+                                <td class="mdl-cell--hide-phone">
                                     {{entry.longitude}}
                                 </td>
-                                <td>
+                                <td class="mdl-cell--hide-phone">
                                     {{entry.markerName}}
                                 </td>
                             </tr>

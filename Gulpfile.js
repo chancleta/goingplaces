@@ -13,6 +13,7 @@ var gulpFilter = require('gulp-filter');
 var usemin = require('gulp-usemin');
 var merge = require('merge2');
 var _if = require('gulp-if');
+var flatten = require('gulp-flatten');
 
 var files = {
 
@@ -133,7 +134,15 @@ gulp.task("copy:allToDist", function () {
 });
 
 gulp.task("copy:vendorjs", function () {
-    return gulp.src(files.vendorjs.path).pipe(gulp.dest(files.dist.js.dir));
+    return gulp.src(files.vendorjs.path)
+        .pipe(uglify())
+        .pipe(gulp.dest(files.dist.js.dir));
+});
+
+gulp.task("copy:vendorimages", function () {
+    return gulp.src("./bower_components/**/*.svg")
+        .pipe(flatten())
+        .pipe(gulp.dest("./app/images"));
 });
 
 gulp.task('mergejsfiles', function () {
@@ -157,10 +166,10 @@ gulp.task("watch", ['compile:typescripts'], function () {
 });
 
 gulp.task("build", [], function (callback) {
-    runSequence("clean:dist", "clean:js", "compile:typescripts", "bower:js", "compile:sass", "copy:allToDist", "mergejsfiles", "copy:vendorjs", callback);
+    runSequence("clean:dist", "clean:js", "compile:typescripts", "bower:js", "compile:sass", "copy:vendorimages","copy:allToDist", "mergejsfiles", "copy:vendorjs", callback);
 });
 
-gulp.task("serve", ["watch", "compile:typescripts", "bower:js", "compile:sass"], function () {
+gulp.task("serve", ["watch", "compile:typescripts", "bower:js", "compile:sass","copy:vendorimages"], function () {
     gulp.src(files.app.dir)
         .pipe(server({
             defaultFile: "index.html",
