@@ -11,7 +11,8 @@ module App.Models{
         homePage:string;
         latitude:string;
         longitude:string;
-        markerLabel?:string;
+        active:boolean;
+        markerName?:string;
     }
 
     export interface IDashboardEventArg{

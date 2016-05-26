@@ -40,13 +40,21 @@ module App.Controllers {
     }
 
     export class SummaryCtrl {
-        public static $inject = ["$scope", "localStorageService"];
+        public static $inject = ["$scope", "localStorageService","$timeout"];
         public dataEntries:Array<App.Models.ICSVEntryModel>;
-
-        constructor($scope:angular.IScope, localStorage:angular.local.storage.ILocalStorageService) {
+        public filterText:string;
+        constructor($scope:angular.IScope,public localStorage:angular.local.storage.ILocalStorageService, public $timeout:angular.ITimeoutService) {
             this.dataEntries = localStorage.get<Array<App.Models.ICSVEntryModel>>("csvEntries");
             //console.log(this.dataEntries);
             $scope.$emit(App.Models.DashboardEvents[App.Models.DashboardEvents.changeView], {id: "#dashboardSummary"});
+        }
+        public reloadMaterialDesign():void{
+            this.$timeout(()=>componentHandler.upgradeAllRegistered(),1);
+        }
+
+        public updateEntryStatus(entry:App.Models.ICSVEntryModel):void{
+            entry.active = !entry.active;
+            this.localStorage.set("csvEntries", this.dataEntries);
         }
     }
 
@@ -213,6 +221,7 @@ module App.Controllers {
                     homePage: line[App.Models.CSVHeader.HomePage],
                     latitude: line[latitudeHeader],
                     longitude: line[longitudeHeader],
+                    active: true,
                     markerName: markerHeader !== undefined ? line[markerHeader] : ""
                 };
                 entryArray.push(entry);

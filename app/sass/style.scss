@@ -90,9 +90,9 @@
   }
 
   .mdl-textfield__label--icon {
-    top: 20px;
+    top: 17px;
     .material-icons {
-      color: rgb(33, 150, 243);
+      color: rgb(63,81,181);
     }
   }
 }
@@ -103,6 +103,13 @@
 
 #toastSuccess {
   background-color: rgb(76, 175, 80);
+}
+
+.table>thead>tr>th, .table>thead>tr>td, .table>tbody>tr>th, .table>tbody>tr>td, .table>tfoot>tr>th, .table>tfoot>tr>td{
+  text-align: center;
+  &:first-child{
+    text-align: left;
+  }
 }
 
 //$logoPadding: 7px;
