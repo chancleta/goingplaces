@@ -16,7 +16,7 @@ module App.Controllers {
             $scope.$on(App.Models.DashboardEvents[App.Models.DashboardEvents.changeView], (event, args)=> {
                 let finder:App.Models.IDashboardEventArg = <App.Models.IDashboardEventArg>args;
 
-                let newActiveItem:HTMLElement =  <HTMLElement> document.querySelector(finder.id);
+                let newActiveItem:HTMLElement = <HTMLElement> document.querySelector(finder.id);
                 /**
                  * Each A tag has the information of its view, what the title of the page should be and
                  * the header of the dashboard
@@ -40,22 +40,77 @@ module App.Controllers {
     }
 
     export class SummaryCtrl {
-        public static $inject = ["$scope", "localStorageService","$timeout"];
+        public static $inject = ["$scope", "localStorageService", "$timeout"];
         public dataEntries:Array<App.Models.ICSVEntryModel>;
         public filterText:string;
-        constructor($scope:angular.IScope,public localStorage:angular.local.storage.ILocalStorageService, public $timeout:angular.ITimeoutService) {
+
+        constructor($scope:angular.IScope, public localStorage:angular.local.storage.ILocalStorageService, public $timeout:angular.ITimeoutService) {
             this.dataEntries = localStorage.get<Array<App.Models.ICSVEntryModel>>("csvEntries");
             //console.log(this.dataEntries);
             $scope.$emit(App.Models.DashboardEvents[App.Models.DashboardEvents.changeView], {id: "#dashboardSummary"});
         }
-        public reloadMaterialDesign():void{
-            this.$timeout(()=>componentHandler.upgradeAllRegistered(),1);
+
+        public reloadMaterialDesign():void {
+            this.$timeout(()=>componentHandler.upgradeAllRegistered(), 1);
         }
 
-        public updateEntryStatus(entry:App.Models.ICSVEntryModel):void{
+        public updateEntryStatus(entry:App.Models.ICSVEntryModel):void {
             entry.active = !entry.active;
             this.localStorage.set("csvEntries", this.dataEntries);
         }
+    }
+
+    export class HomeCtrl {
+        public static $inject = ["$scope", "localStorageService", "JavaScriptResourceLoader"];
+
+        constructor($scope:angular.IScope, public localStorage:angular.local.storage.ILocalStorageService, public JavaScriptResourceLoader:App.Services.IAsynchResource) {
+            this.JavaScriptResourceLoader.id = "google-maps";
+            this.JavaScriptResourceLoader.url = "https://maps.googleapis.com/maps/api/js?key=AIzaSyDgBWbGc9jaXuIdWiwVQT82CQ5TbL5sodI";
+            this.JavaScriptResourceLoader.loadResource().then(()=>this.initMap());
+        }
+
+        public initMap():void {
+            let center = {lat: -25.363, lng: 131.044};
+            let map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 4,
+                center: center
+            });
+
+            var contentString = '<div id="content">' +
+                '<div id="siteNotice">' +
+                '</div>' +
+                '<h1 id="firstHeading" class="firstHeading">Uluru</h1>' +
+                '<div id="bodyContent">' +
+                '<p><b>Uluru</b>, also referred to as <b>Ayers Rock</b>, is a large ' +
+                'sandstone rock formation in the southern part of the ' +
+                'Northern Territory, central Australia. It lies 335&#160;km (208&#160;mi) ' +
+                'south west of the nearest large town, Alice Springs; 450&#160;km ' +
+                '(280&#160;mi) by road. Kata Tjuta and Uluru are the two major ' +
+                'features of the Uluru - Kata Tjuta National Park. Uluru is ' +
+                'sacred to the Pitjantjatjara and Yankunytjatjara, the ' +
+                'Aboriginal people of the area. It has many springs, waterholes, ' +
+                'rock caves and ancient paintings. Uluru is listed as a World ' +
+                'Heritage Site.</p>' +
+                '<p>Attribution: Uluru, <a href="https://en.wikipedia.org/w/index.php?title=Uluru&oldid=297882194">' +
+                'https://en.wikipedia.org/w/index.php?title=Uluru</a> ' +
+                '(last visited June 22, 2009).</p>' +
+                '</div>' +
+                '</div>';
+
+            var infowindow = new google.maps.InfoWindow({
+                content: contentString
+            });
+
+            var marker = new google.maps.Marker({
+                position: center,
+                map: map,
+                title: 'Uluru (Ayers Rock)'
+            });
+            marker.addListener('click', function () {
+                infowindow.open(map, marker);
+            });
+        }
+
     }
 
     export class CSVImporterCtrl {
@@ -108,6 +163,16 @@ module App.Controllers {
             formData.$setUntouched();
             formData.$setPristine();
 
+            /*
+             * Resetting Material Design Lite fields after changing their value
+             * */
+            let mldFields = document.querySelectorAll(".mdl-textfield");
+            for (let i = 0; i < mldFields.length; i++) {
+                if (mldFields[i].MaterialTextfield !== undefined) {
+                    mldFields[i].MaterialTextfield.change();
+                }
+            }
+
             document.querySelector('#toastSuccess').MaterialSnackbar.showSnackbar({
                 message: "Data successfully imported",
                 timeout: 10000
@@ -144,6 +209,7 @@ module App.Controllers {
             /**
              * The header must be at least 11 columns length
              */
+            console.log(headersArray.length);
             if (message === undefined && headersArray.length <= 10) {
                 message = "Header line does not contains minimun requirements (11 columns at least), did you choose right Separated by value?";
             }

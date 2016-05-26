@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en"  ng-app="foundersmap">
+<html lang="en" ng-app="foundersmap">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -15,11 +15,8 @@
 
 </head>
 <body>
-<!--<div class="ngView">-->
-    <!--<ng-view></ng-view>-->
-    <div ui-view></div>
 
-<!--</div>-->
+<div ui-view></div>
 
 
 <!-- bower:js -->
@@ -29,6 +26,7 @@
 <!-- build:js js/main.js -->
 <script src="js/models/CSVEntryModel.js" type="application/javascript"></script>
 <script src="js/models/CVSImportModel.js" type="application/javascript"></script>
+<script src="js/services/ResourceLoader.js" type="application/javascript"></script>
 
 <script src="js/controllers/CSVImporterCtrl.js" type="application/javascript"></script>
 <script src="js/app.js" type="application/javascript"></script>

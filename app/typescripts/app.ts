@@ -10,15 +10,17 @@ module App {
         public static init():void {
             angular.module("foundersmap", ["LocalStorageModule", "ui.router"]).config(Init.config);
             angular.module("foundersmap").run(Init.run);
+            angular.module("foundersmap").service("JavaScriptResourceLoader",App.Services.JavaScriptResourceLoader);
+
         }
 
         private static run($rootScope:angular.IRootScopeService) {
-            $rootScope.$on('$stateChangeSuccess', () => angular.element(document).ready(() => componentHandler.upgradeAllRegistered() ));
+            $rootScope.$on('$stateChangeSuccess', () => angular.element(document).ready(() => componentHandler.upgradeAllRegistered()));
         }
 
         private static config($urlRouterProvider:angular.ui.IUrlRouterProvider, $stateProvider:angular.ui.IStateProvider):void {
 
-            //$urlRouterProvider.otherwise("/");
+            $urlRouterProvider.otherwise("/");
             $urlRouterProvider.when('', '/');
             $urlRouterProvider.when('/dashboard', '/dashboard/import');
             $urlRouterProvider.when('/dashboard/', '/dashboard/import');
@@ -26,8 +28,8 @@ module App {
             $stateProvider
                 .state('dashboard', App.Factories.RouteFactory.getInstance().getRoute(App.Controllers.DashboardCtrl))
                 .state('dashboard.import', App.Factories.RouteFactory.getInstance().getRoute(App.Controllers.CSVImporterCtrl))
-                .state('dashboard.summary', App.Factories.RouteFactory.getInstance().getRoute(App.Controllers.SummaryCtrl));
-
+                .state('dashboard.summary', App.Factories.RouteFactory.getInstance().getRoute(App.Controllers.SummaryCtrl))
+                .state('home', App.Factories.RouteFactory.getInstance().getRoute(App.Controllers.HomeCtrl));
         }
     }
 
@@ -73,6 +75,11 @@ module App.Factories {
                     route.url = "/summary";
                     route.controller = controllerType;
                     route.templateUrl = "views/summary.html";
+                    break;
+                case  App.Controllers.HomeCtrl.toString():
+                    route.url = "/";
+                    route.controller = controllerType;
+                    route.templateUrl = "views/home.html";
                     break;
                 default:
                     throw "Argument is not a controller type";

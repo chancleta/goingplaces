@@ -56,6 +56,9 @@
       color: rgb(222, 50, 38);
     }
 
+    .mdl-textfield__label{
+      color: rgba(0,0,0, 0.6);
+    }
     .ng-invalid.ng-invalid.ng-touched + label:after {
       background-color: rgb(222, 50, 38);
     }
