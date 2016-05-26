@@ -5,7 +5,7 @@
 
 .importer {
   .importer-navMenu {
-    .mdl-navigation__link:hover,.mdl-navigation__link.is-active {
+    .mdl-navigation__link:hover, .mdl-navigation__link.is-active {
       background-color: #00BCD4;
     }
   }
@@ -52,15 +52,19 @@
       font-size: 12px;
     }
 
+    .ng-invalid.ng-invalid.ng-touched + .mdl-textfield__label--icon .material-icons {
+      color: rgb(222, 50, 38);
+    }
+
     .ng-invalid.ng-invalid.ng-touched + label:after {
       background-color: rgb(222, 50, 38);
     }
 
-    .ng-invalid.ng-invalid.ng-untouched + label + span{
+    .ng-invalid.ng-invalid.ng-untouched + label + span {
       visibility: hidden;
     }
 
-    button{
+    button {
       margin: 0 auto;
     }
 
@@ -85,15 +89,21 @@
     }
   }
 
+  .mdl-textfield__label--icon {
+    top: 20px;
+    .material-icons {
+      color: rgb(33, 150, 243);
+    }
+  }
 }
 
-#toastError{
+#toastError {
   background-color: rgb(222, 50, 38);
 }
-#toastSuccess{
+
+#toastSuccess {
   background-color: rgb(76, 175, 80);
 }
-
 
 //$logoPadding: 7px;
 //$logoHeight:  24px;

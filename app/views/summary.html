@@ -23,7 +23,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                            <tr ng-repeat="entry in vm.dataEntries" >
+                            <tr ng-repeat="entry in vm.dataEntries" ng-cloak >
                                <td>
                                    <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="checkbox{{$index}}">
                                        <input type="checkbox" id="checkbox{{$index}}" class="mdl-checkbox__input" checked>

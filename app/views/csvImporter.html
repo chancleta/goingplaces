@@ -44,21 +44,26 @@
                         </div>
 
                         <div class="mdl-textfield mdl-js-textfield mdl-cell mdl-cell--3-col-desktop mdl-cell--4-col-tablet mdl-cell--4-col-phone">
+
                             <div class="mdl-textfield mdl-js-textfield">
+
                                 <input class="mdl-textfield__input" type="text" id="latitudeName"
                                        name="latitudeName" ng-model="vm.importData.latitudeName" required>
-                                <label class="mdl-textfield__label" for="latitudeName">Latitude Column
-                                    Name</label>
+
+                                <label class="mdl-textfield__label mdl-textfield__label--icon" for="latitudeName">
+                                    <i class="material-icons">pin_drop</i>Latitude Column Name</label>
                                 <span class="mdl-textfield__error">Required</span>
 
                             </div>
                         </div>
 
                         <div class="mdl-textfield mdl-js-textfield  mdl-cell mdl-cell--3-col-desktop mdl-cell--4-col-tablet mdl-cell--4-col-phone">
+
                             <div class="mdl-textfield mdl-js-textfield">
-                                <input class="mdl-textfield__input" type="text" id="longitudeName"
+                                <input class="mdl-textfield__input " type="text" id="longitudeName"
                                        name="longitudeName" ng-model="vm.importData.longitudeName" required>
-                                <label class="mdl-textfield__label" for="longitudeName">Longitude Column
+                                <label class="mdl-textfield__label mdl-textfield__label--icon" for="longitudeName">
+                                    <i class="material-icons">pin_drop</i>Longitude Column
                                     Name</label>
                                 <span class="mdl-textfield__error">Required</span>
 
@@ -82,7 +87,7 @@
                                     <input class="mdl-textfield__input" type="text" id="markerName"
                                            name="markerName" ng-model="vm.importData.markerName"
                                            ng-required="vm.importData.useMakerLabel" required>
-                                    <label class="mdl-textfield__label" for="markerName">Marker column
+                                    <label class="mdl-textfield__label mdl-textfield__label--icon" for="markerName"><i class="material-icons">label</i>Marker column
                                         name</label>
                                     <span class="mdl-textfield__error">required</span>
 
@@ -90,7 +95,8 @@
                             </div>
                         </div>
                         <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
-                                ng-click="vm.processCSV(csvForm)" ng-disabled="csvForm.$invalid || vm.processingData" type="button">Upload
+                                ng-click="vm.processCSV(csvForm)" ng-disabled="csvForm.$invalid || vm.processingData"
+                                type="button">Upload
                             <i class="material-icons">send</i>
                         </button>
                     </div>
